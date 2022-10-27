@@ -1,0 +1,15 @@
+@import '../color.scss';
+
+input {
+   border: none;
+   border-bottom: $font-color solid 3px;
+   //    прозрачный фон
+   background: transparent;
+   width: 100%;
+   //    когда ставишь курсор для записи
+   &:focus {
+      outline: none;
+      //  делаем так чтобы форма немного увеличивалась при ее активности
+      transform: scale(1.02);
+   }
+}

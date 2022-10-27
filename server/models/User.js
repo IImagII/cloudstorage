@@ -21,12 +21,12 @@ const User = new Schema({
    avatar: {
       type: String,
    },
-   files: [
-      {
-         type: ObjectId,
-         ref: 'File',
-      },
-   ],
+   // files: [
+   //    {
+   //       type: ObjectId,
+   //       ref: 'File',
+   //    },
+   // ],
 })
 
 module.exports = model('User', User)
