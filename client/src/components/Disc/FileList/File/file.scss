@@ -1,0 +1,26 @@
+@import '../../../../utils/color.scss';
+
+.file {
+   margin: 10px 0;
+   border-bottom: 2px solid $font-color;
+   display: grid;
+   align-items: center;
+   &:hover {
+      transform: scale(1.02);
+   }
+   //  Делаем разметку колонок
+   grid-template-columns: 1fr 4fr repeat(4, 1fr);
+   &__date {
+      // задаем где будет информация в нашем случае в 5 колонке
+      grid-column-start: 5;
+      justify-self: center;
+   }
+   &__size {
+      // задаем где будет информация в нашем случае в 6 колонке
+      grid-column-start: 6;
+      justify-self: center;
+   }
+   &__img {
+      justify-self: center;
+   }
+}

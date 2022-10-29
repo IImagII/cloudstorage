@@ -6,6 +6,8 @@ const { check, validationResult } = require('express-validator')
 const jwt = require('jsonwebtoken')
 const config = require('config')
 const authMiddleware = require('../middleware/auth.middleware')
+const fileService = require('../services/fileService')
+const File = require('../models/File')
 
 router.post(
    '/registration',
@@ -38,6 +40,8 @@ router.post(
          })
          // запись в базу данных пользователя
          await user.save()
+         await fileService.createDir(new File({ user: user.id, name: '' }))
+
          return res.status(200).json({ user, message: 'Пользователь создан' })
       } catch (e) {
          console.log(e)
