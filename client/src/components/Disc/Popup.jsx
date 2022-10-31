@@ -10,12 +10,18 @@ export const Popup = () => {
    const PopupDisplay = useSelector(state => state.files.popupDisplay)
    const currentDir = useSelector(state => state.files.currentDir)
    const dispatch = useDispatch()
+
    const createHandler = () => {
       dispatch(createDir(currentDir, dirName))
       dispatch(setPopupDisplay('none'))
       setDirName('')
    }
 
+   const handleKeyDown = event => {
+      if (event.key === 'Enter') {
+         createHandler()
+      }
+   }
    return (
       <div
          className='popup'
@@ -37,6 +43,7 @@ export const Popup = () => {
                placeholder='Введите название папки...'
                value={dirName}
                onChange={e => setDirName(e.target.value)}
+               onKeyDown={handleKeyDown}
             />
             <button className='popup__create' onClick={() => createHandler()}>
                Создать

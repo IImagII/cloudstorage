@@ -4,9 +4,7 @@ import './file-list.scss'
 import { File } from './File/File'
 
 export const FileList = () => {
-   const files = useSelector(state => state.files.files).map(file => (
-      <File file={file} key={file.id} />
-   ))
+   const files = useSelector(state => state.files.files)
    return (
       <div className='file-list'>
          <div className='file-list__header'>
@@ -14,7 +12,9 @@ export const FileList = () => {
             <div className='file-list__date'>Дата</div>
             <div className='file-list__size'>Размер</div>
          </div>
-         {files}
+         {files.map(file => (
+            <File file={file} key={file.id} />
+         ))}
       </div>
    )
 }

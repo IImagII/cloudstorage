@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const config = require('config')
+const fileUpload = require('express-fileupload')
 
 const cors = require('cors')
 const morgan = require('morgan')
@@ -17,7 +18,7 @@ const url = config.get('dbUrl')
 app.use(express.json())
 app.use(morgan('dev'))
 app.use(cors())
-
+app.use(fileUpload({}))
 app.use('/api/auth', authRoutes)
 app.use('/api/files', filesRoutes)
 

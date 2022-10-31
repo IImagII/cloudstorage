@@ -12,7 +12,7 @@ import { Authorization } from './components/Authorization'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { auth } from './actions/user'
-import { Disc } from './components/Disc/'
+import { Disc } from './components/Disc/Disc'
 
 function App() {
    const isAuth = useSelector(state => state.user.isAuth)

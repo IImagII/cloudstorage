@@ -3,8 +3,7 @@
    &__btns {
       display: flex;
    }
-   &__back {
-   }
+
    &__create {
       margin-left: 10px;
    }
@@ -56,15 +55,15 @@
 input {
    margin: 20px 0;
 }
-// :focus::-webkit-input-placeholder {
-//    color: transparent;
-// }
-// :focus::-moz-placeholder {
-//    color: transparent;
-// }
-// :focus:-moz-placeholder {
-//    color: transparent;
-// }
-// :focus:-ms-input-placeholder {
-//    color: transparent;
-// }
+:focus::-webkit-input-placeholder {
+   color: transparent;
+}
+:focus::-moz-placeholder {
+   color: transparent;
+}
+:focus:-moz-placeholder {
+   color: transparent;
+}
+:focus:-ms-input-placeholder {
+   color: transparent;
+}

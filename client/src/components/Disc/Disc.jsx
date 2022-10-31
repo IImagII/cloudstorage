@@ -5,22 +5,38 @@ import { getFiles } from '../../actions/file'
 import { FileList } from './FileList/FileList'
 import './disc.scss'
 import { Popup } from './Popup'
-import { setPopupDisplay } from '../../reducers/fileReducer'
+import { setCurrentDir, setPopupDisplay } from '../../reducers/fileReducer'
 
 export const Disc = () => {
    const dispatch = useDispatch()
    const currentDir = useSelector(state => state.files.currentDir)
+   const dirStack = useSelector(state => state.files.dirStack)
 
-   useEffect(() => dispatch(getFiles(currentDir)), [dispatch, currentDir])
+   useEffect(() => {
+      dispatch(getFiles(currentDir))
+   }, [currentDir])
+
+   function showPopupHandler() {
+      dispatch(setPopupDisplay('flex'))
+   }
+
+   function backClickHandler() {
+      const backDirId = dirStack.pop()
+      dispatch(setCurrentDir(backDirId))
+   }
 
    return (
       <div className='disk'>
          <div className='disk__btns'>
-            <button className='disk__back'>Назад</button>
-            <button
-               className='disk__create'
-               onClick={() => dispatch(setPopupDisplay('flex'))}
-            >
+            {currentDir && (
+               <button
+                  className='disk__back'
+                  onClick={() => backClickHandler()}
+               >
+                  Назад
+               </button>
+            )}
+            <button className='disk__create' onClick={() => showPopupHandler()}>
                Создать папку
             </button>
          </div>

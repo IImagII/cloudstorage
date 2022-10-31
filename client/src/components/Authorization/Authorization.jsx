@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { authorization } from '../../actions/user'
 import { Input } from '../../utils/Input/Input'
@@ -8,6 +9,23 @@ export const Authorization = () => {
    const [email, setEmail] = useState('')
    const [password, setPassword] = useState('')
    const dispatch = useDispatch()
+
+   const handleClick = () => {
+      dispatch(authorization(email, password))
+   }
+   useEffect(() => {
+      const keyDownHandler = event => {
+         if (event.key === 'Enter') {
+            event.preventDefault()
+            handleClick()
+         }
+      }
+      document.addEventListener('keydown', keyDownHandler)
+      return () => {
+         document.removeEventListener('keydown', keyDownHandler)
+      }
+   }, [email, password])
+
    return (
       <div className='authorization'>
          <div className='authorization__header'>Авторизация</div>
@@ -24,10 +42,7 @@ export const Authorization = () => {
             setValue={setPassword}
          />
 
-         <button
-            className='authorization__btn'
-            onClick={() => dispatch(authorization(email, password))}
-         >
+         <button className='authorization__btn' onClick={handleClick}>
             Войти
          </button>
       </div>
