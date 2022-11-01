@@ -1,3 +1,0 @@
-
-
-AlpineJS, Tailwind CSS, Laravel Livewir.- помотреть что это

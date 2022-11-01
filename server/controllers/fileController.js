@@ -47,9 +47,11 @@ class FileController {
             _id: req.body.parent,
          })
          const user = await User.findOne({ _id: req.user.id })
-         if (user.usedSpace + file.size > user.diskSpace) {
-            res.status(400).json({ message: 'There no space on the disk' })
-         }
+         // if (user.usedSpace + file.size > user.diskSpace) {
+         //    return res.status(400).json({
+         //       message: `There no space on the disk ${user.usedSpace}`,
+         //    })
+         // }
          user.usedSpace = user.usedSpace + file.size
          let path
          if (parent) {
@@ -60,7 +62,7 @@ class FileController {
             path = `${config.get('filePath')}\\${user._id}\\${file.name}`
          }
          if (fs.existsSync(path)) {
-            res.status(400).json({ message: 'File already exist' })
+            return res.status(400).json({ message: 'File already exist' })
          }
          file.mv(path)
          const type = file.name.split('.').pop()

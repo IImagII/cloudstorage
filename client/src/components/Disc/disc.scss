@@ -1,3 +1,4 @@
+@import '../../utils/color.scss';
 .disk {
    margin-top: 20px;
    &__btns {
@@ -7,6 +8,25 @@
    &__create {
       margin-left: 10px;
    }
+   &__upload-input {
+      display: none;
+   }
+   &__upload-label {
+      border: 2px dashed $font-color;
+      padding: 5px 10px;
+      cursor: pointer;
+      margin-left: 10px;
+   }
+}
+.drag-area {
+   width: 100%;
+   height: calc(100vh - 50px - 40px);
+   margin: 20px;
+   border: 2px dashed $font-color;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 24px;
 }
 .popup {
    width: 100%;
