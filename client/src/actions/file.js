@@ -55,21 +55,6 @@ export function uploadFile(file, dirId) {
                   Authorization: `Bearer ${localStorage.getItem('token')}`,
                },
 
-               onUploadProgress: ({ progress }) => {
-                  const totalLength = progress.lengthComputable
-                     ? progress.total
-                     : progress.target.getResponseHeader('content-length') ||
-                       progress.target.getResponseHeader(
-                          'x-decompressed-content-length'
-                       )
-                  console.log('onUploadProgress', totalLength)
-                  if (totalLength !== null) {
-                     this.updateProgressBarValue(
-                        Math.round((progress.loaded * 100) / totalLength)
-                     )
-                  }
-               },
-
                // onUploadProgress: progressEvent => {
                //    const totalLength = progressEvent.lengthComputable
                //       ? progressEvent.total
@@ -79,19 +64,58 @@ export function uploadFile(file, dirId) {
                //         progressEvent.target.getResponseHeader(
                //            'x-decompressed-content-length'
                //         )
-               //    console.log('total', totalLength)
-               //    if (totalLength) {
-               //       let progress = Math.round(
-               //          (progressEvent.loaded * 100) / totalLength
+               //    console.log('onUploadProgress', totalLength)
+               //    if (totalLength !== null) {
+               //       this.updateProgressBarValue(
+               //          Math.round((progressEvent.loaded * 100) / totalLength)
                //       )
-               //       console.log(progress)
                //    }
                // },
+
+               onUploadProgress: progressEvent => {
+                  // const totalLength = progressEvent.lengthComputable
+                  //    ? progressEvent.total
+                  //    : progressEvent.target.getResponseHeader(
+                  //         'content-length'
+                  //      ) ||
+                  //      progressEvent.target.getResponseHeader(
+                  //         'x-decompressed-content-length'
+                  //      )
+                  // console.log('total', totalLength)
+                  // if (totalLength) {
+                  //    let progress = Math.round(
+                  //       (progressEvent.loaded * 100) / totalLength
+                  //    )
+                  //    console.log(progress)
+                  // }
+                  const progress = parseInt(
+                     Math.round(
+                        (progressEvent.loaded * 100) / progressEvent.total
+                     )
+                  )
+                  console.log(progress)
+               },
             }
          )
          dispatch(addFiles(response.data))
       } catch (e) {
          alert(e.response.data.message)
       }
+   }
+}
+export const downloadFile = async file => {
+   const response = await fetch(
+      `${paths.url}/api/files/download?id=${file._id}`,
+      { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+   )
+   if (response.status === 200) {
+      const blob = await response.blob()
+      const downloadUrl = window.URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = downloadUrl
+      link.download = file.name
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
    }
 }

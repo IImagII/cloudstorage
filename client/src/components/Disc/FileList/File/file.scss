@@ -23,4 +23,25 @@
    &__img {
       justify-self: center;
    }
+   // по умолчанию кнопки будут скрыты
+   &__btn {
+      display: none;
+   }
+   // Сделаем так чтобы при наведении на файл дата и размер съежали на две колонки влево
+   &:hover &__date {
+      grid-column-start: 3;
+   }
+   &:hover &__size {
+      grid-column-start: 4;
+   }
+   // перемещение для каждой из кнопок
+   &:hover &__download {
+      grid-column-start: 5;
+      margin-right: 10px;
+      display: block;
+   }
+   &:hover &__delete {
+      grid-column-start: 6;
+      display: block;
+   }
 }
