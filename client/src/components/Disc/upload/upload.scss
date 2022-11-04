@@ -1,0 +1,57 @@
+@import '../../../utils/color.scss';
+
+.upload {
+   height: 300px;
+   width: 300px;
+   //    фиксируем его появление
+   position: fixed;
+   background-color: $font-color;
+   //    прилепим его в правый нижний угол
+   bottom: 10px;
+   right: 10px;
+   padding: 20px;
+   border-radius: 12px;
+   &__header {
+      display: flex;
+      justify-content: space-between;
+   }
+   &__title {
+      color: $background-color;
+      font-size: 1.2em;
+   }
+   &__close {
+      background: red;
+      color: black;
+      border-radius: 25%;
+      font-size: 16px;
+      padding: 2px;
+   }
+}
+.upload-list {
+   background-color: $background-color;
+   border-radius: 8px;
+   margin: 5px 0;
+   padding: 5px 10px;
+   &__header {
+      display: flex;
+      justify-content: space-between;
+   }
+   &__progress-bar {
+      height: 1rem;
+      border-radius: 8px;
+      background-color: $font-color;
+      display: flex;
+      margin: 3px 0;
+   }
+   &__upload-bar {
+      // стили визуализации загрузки
+      background-color: rgb(55, 187, 55);
+      border-radius: 8px;
+   }
+   &__percent {
+      // позиционируем проценты
+      color: $background-color;
+      left: 50%;
+      position: absolute;
+   }
+}

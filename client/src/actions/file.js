@@ -1,5 +1,10 @@
 import axios from 'axios'
-import { addFiles, setFiles } from '../reducers/fileReducer'
+import { addFiles, deleteFileAction, setFiles } from '../reducers/fileReducer'
+import {
+   addUploadFile,
+   changeUploadFile,
+   showUpload,
+} from '../reducers/uploadReducer'
 import { paths } from '../utils/path'
 
 export const getFiles = dirId => {
@@ -47,6 +52,9 @@ export function uploadFile(file, dirId) {
          if (dirId) {
             formData.append('parent', dirId)
          }
+         const uploadFile = { name: file.name, progress: 0, id: Date.now() }
+         dispatch(showUpload())
+         dispatch(addUploadFile(uploadFile))
          const response = await axios.post(
             `${paths.url}/api/files/upload`,
             formData,
@@ -55,45 +63,11 @@ export function uploadFile(file, dirId) {
                   Authorization: `Bearer ${localStorage.getItem('token')}`,
                },
 
-               // onUploadProgress: progressEvent => {
-               //    const totalLength = progressEvent.lengthComputable
-               //       ? progressEvent.total
-               //       : progressEvent.target.getResponseHeader(
-               //            'content-length'
-               //         ) ||
-               //         progressEvent.target.getResponseHeader(
-               //            'x-decompressed-content-length'
-               //         )
-               //    console.log('onUploadProgress', totalLength)
-               //    if (totalLength !== null) {
-               //       this.updateProgressBarValue(
-               //          Math.round((progressEvent.loaded * 100) / totalLength)
-               //       )
-               //    }
-               // },
-
                onUploadProgress: progressEvent => {
-                  // const totalLength = progressEvent.lengthComputable
-                  //    ? progressEvent.total
-                  //    : progressEvent.target.getResponseHeader(
-                  //         'content-length'
-                  //      ) ||
-                  //      progressEvent.target.getResponseHeader(
-                  //         'x-decompressed-content-length'
-                  //      )
-                  // console.log('total', totalLength)
-                  // if (totalLength) {
-                  //    let progress = Math.round(
-                  //       (progressEvent.loaded * 100) / totalLength
-                  //    )
-                  //    console.log(progress)
-                  // }
-                  const progress = parseInt(
-                     Math.round(
-                        (progressEvent.loaded * 100) / progressEvent.total
-                     )
+                  uploadFile.progress = Math.round(
+                     (progressEvent.loaded * 100) / progressEvent.total
                   )
-                  console.log(progress)
+                  dispatch(changeUploadFile(uploadFile))
                },
             }
          )
@@ -117,5 +91,23 @@ export const downloadFile = async file => {
       document.body.appendChild(link)
       link.click()
       link.remove()
+   }
+}
+export function deleteFile(file) {
+   return async dispatch => {
+      try {
+         const response = await axios.delete(
+            `http://localhost:5000/api/files?id=${file._id}`,
+            {
+               headers: {
+                  Authorization: `Bearer ${localStorage.getItem('token')}`,
+               },
+            }
+         )
+         dispatch(deleteFileAction(file._id))
+         alert(response.data.message)
+      } catch (e) {
+         alert(e?.response?.data?.message)
+      }
    }
 }

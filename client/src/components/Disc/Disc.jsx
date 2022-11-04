@@ -7,6 +7,7 @@ import './disc.scss'
 import { Popup } from './Popup'
 import { setCurrentDir, setPopupDisplay } from '../../reducers/fileReducer'
 import { useState } from 'react'
+import { Upload } from './upload/Upload'
 
 export const Disc = () => {
    const dispatch = useDispatch()
@@ -90,6 +91,7 @@ export const Disc = () => {
          </div>
          <FileList />
          <Popup />
+         <Upload />
       </div>
    ) : (
       <div
