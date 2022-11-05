@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getFiles, uploadFile } from '../../actions/file'
@@ -6,18 +6,19 @@ import { FileList } from './FileList/FileList'
 import './disc.scss'
 import { Popup } from './Popup'
 import { setCurrentDir, setPopupDisplay } from '../../reducers/fileReducer'
-import { useState } from 'react'
 import { Upload } from './upload/Upload'
 
 export const Disc = () => {
    const dispatch = useDispatch()
    const currentDir = useSelector(state => state.files.currentDir)
    const dirStack = useSelector(state => state.files.dirStack)
+   const loader = useSelector(state => state.loader.loader)
    const [dragEnter, setDragEnter] = useState(false)
+   const [sort, setSort] = useState('type')
 
    useEffect(() => {
-      dispatch(getFiles(currentDir))
-   }, [currentDir])
+      dispatch(getFiles(currentDir, sort))
+   }, [currentDir, sort])
 
    function showPopupHandler() {
       dispatch(setPopupDisplay('flex'))
@@ -54,6 +55,26 @@ export const Disc = () => {
       setDragEnter(false)
    }
 
+   if (loader) {
+      return (
+         <div className='loader'>
+            <div class='lds-spinner'>
+               <div></div>
+               <div></div>
+               <div></div>
+               <div></div>
+               <div></div>
+               <div></div>
+               <div></div>
+               <div></div>
+               <div></div>
+               <div></div>
+               <div></div>
+               <div></div>
+            </div>
+         </div>
+      )
+   }
    return !dragEnter ? (
       <div
          className='disk'
@@ -87,6 +108,15 @@ export const Disc = () => {
                   onChange={e => fileUploadHandler(e)}
                   multiple={true}
                />
+            </div>
+
+            <div className='disk__select'>
+               <dir>Сортировка:</dir>
+               <select value={sort} onChange={e => setSort(e.target.value)}>
+                  <option value='name'>По Названию</option>
+                  <option value='type'>По типу</option>
+                  <option value='date'>По дате</option>
+               </select>
             </div>
          </div>
          <FileList />

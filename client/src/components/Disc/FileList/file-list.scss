@@ -20,17 +20,24 @@
    }
 }
 // класс который будет добавляться в компонент Transition
-.animation-enter-active {
-   animation: 3s forwards animation-enter;
+.item-enter-active {
+   animation: 500ms forwards item-enter;
 }
 // будет два ключевых кадра
-@keyframes animation-enter {
+@keyframes item-enter {
    from {
       opacity: 0;
-      transform: translateY(-1000%);
+      transform: translateY(-50%);
    }
    to {
       opacity: 1;
       transform: translateY(0);
    }
+}
+.text-empty {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 26px;
+   height: calc(100vh - 50px);
 }

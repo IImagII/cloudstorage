@@ -1,5 +1,4 @@
 const Router = require('express')
-const File = require('../models/File')
 const authMiddleware = require('../middleware/auth.middleware')
 const FileController = require('../controllers/fileController')
 
@@ -10,5 +9,6 @@ router.get('', authMiddleware, FileController.fetFiles)
 router.post('/upload', authMiddleware, FileController.uploadFile)
 router.get('/download', authMiddleware, FileController.downloadFile)
 router.delete('/', authMiddleware, FileController.deleteFile)
+router.get('/search', authMiddleware, FileController.searchFile)
 
 module.exports = router

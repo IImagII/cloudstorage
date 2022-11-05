@@ -19,6 +19,13 @@
    &__regisration {
       cursor: pointer;
    }
+   &__search {
+      width: 200px;
+      margin-left: 30px;
+      &::placeholder {
+         opacity: 0.5;
+      }
+   }
 }
 
 .container {

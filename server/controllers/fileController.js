@@ -28,10 +28,12 @@ class FileController {
    }
    async fetFiles(req, res) {
       try {
+         const { sort } = req.query
          const files = await File.find({
             user: req.user.id,
             parent: req.query.parent,
-         })
+         }).sort({ [sort]: 1 })
+
          return res.json(files)
       } catch (e) {
          return res.status(500).json({
@@ -39,6 +41,7 @@ class FileController {
          })
       }
    }
+
    async uploadFile(req, res) {
       try {
          const file = req.files.file
@@ -123,6 +126,17 @@ class FileController {
       } catch (e) {
          console.log(e)
          return res.status(400).json({ message: 'Dir is not empty' })
+      }
+   }
+   async searchFile(req, res) {
+      try {
+         const searchName = req.query.search
+         let files = await File.find({ user: req.user.id })
+         files = files.filter(file => file.name.includes(searchName))
+         return res.json(files)
+      } catch (e) {
+         console.log(e)
+         return res.status(400).json({ message: 'Search error' })
       }
    }
 }

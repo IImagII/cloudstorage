@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { hideLoader, showLoader } from '../reducers/appReducer'
 import { addFiles, deleteFileAction, setFiles } from '../reducers/fileReducer'
 import {
    addUploadFile,
@@ -7,20 +8,31 @@ import {
 } from '../reducers/uploadReducer'
 import { paths } from '../utils/path'
 
-export const getFiles = dirId => {
+export const getFiles = (dirId, sort) => {
+   console.log(dirId, sort)
    return async dispatch => {
       try {
-         const response = await axios.get(
-            `${paths.url}/api/files${dirId ? '?parent=' + dirId : ''}`,
-            {
-               headers: {
-                  Authorization: `Bearer ${localStorage.getItem('token')}`,
-               },
-            }
-         )
+         dispatch(showLoader())
+         let urlResp = `${paths.url}/api/files`
+         if (dirId) {
+            urlResp = `${paths.url}/api/files?parent=${dirId}`
+         }
+         if (sort) {
+            urlResp = `${paths.url}/api/files?sort=${sort}`
+         }
+         if (dirId && sort) {
+            urlResp = `${paths.url}/api/files?parent=${dirId}&sort=${sort}`
+         }
+         const response = await axios.get(urlResp, {
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+         })
          dispatch(setFiles(response.data)) //тут передали наш actionCreate fileReducer.js
       } catch (e) {
          console.log(e.response.data.message)
+      } finally {
+         dispatch(hideLoader())
       }
    }
 }
@@ -108,6 +120,26 @@ export function deleteFile(file) {
          alert(response.data.message)
       } catch (e) {
          alert(e?.response?.data?.message)
+      }
+   }
+}
+
+export function searchFile(search) {
+   return async dispatch => {
+      try {
+         const response = await axios.get(
+            `http://localhost:5000/api/files/search?search=${search}`,
+            {
+               headers: {
+                  Authorization: `Bearer ${localStorage.getItem('token')}`,
+               },
+            }
+         )
+         dispatch(setFiles(response.data))
+      } catch (e) {
+         alert(e?.response?.data?.message)
+      } finally {
+         dispatch(hideLoader())
       }
    }
 }

@@ -6,6 +6,11 @@ import { File } from './File/File'
 
 export const FileList = () => {
    const files = useSelector(state => state.files.files)
+
+   if (files.length === 0) {
+      return <div className='text-empty'>Файлы не найдены</div>
+   }
+
    return (
       <div className='file-list'>
          <div className='file-list__header'>
@@ -19,7 +24,7 @@ export const FileList = () => {
                <CSSTransition
                   key={file._id}
                   timeout={500}
-                  className={'animation'}
+                  classNames={'item'}
                   exit={false}
                >
                   <File file={file} />
