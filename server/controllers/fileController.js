@@ -98,7 +98,8 @@ class FileController {
             user: req.user.id,
          })
          const path =
-            config.get('filePath') + '\\' + req.user.id + '\\' + file.path
+            // config.get('filePath') + '\\' + req.user.id + '\\' + file.path
+            fileService.getPath(file)
          if (fs.existsSync(path)) {
             return res.download(path, file.name)
          }

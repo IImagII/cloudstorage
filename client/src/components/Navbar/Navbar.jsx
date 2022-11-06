@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './navbar.scss'
 import logo from '../../assets/img/navbar_logo.svg'
-import { Link, NavLink } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logOutUser } from '../../reducers/userReducer'
 import { getFiles, searchFile } from '../../actions/file'
@@ -38,11 +38,11 @@ export const Navbar = () => {
       <div className='navbar'>
          <div className='container'>
             <img src={logo} alt='' className='navbar__logo' />
-            <div className='navbar__header'>CLOUD STORAGE</div>
+            <div className='navbar__header'>MY CLOUD STORAGE</div>
             {isAuth && (
                <input
                   type='text'
-                  placeholder='Название файла...'
+                  placeholder='Поиск файла...'
                   className='navbar__search'
                   value={searchName}
                   onChange={e => searchHandler(e)}

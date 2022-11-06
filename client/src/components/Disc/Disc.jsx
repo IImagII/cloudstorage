@@ -5,7 +5,11 @@ import { getFiles, uploadFile } from '../../actions/file'
 import { FileList } from './FileList/FileList'
 import './disc.scss'
 import { Popup } from './Popup'
-import { setCurrentDir, setPopupDisplay } from '../../reducers/fileReducer'
+import {
+   setCurrentDir,
+   setPopupDisplay,
+   setView,
+} from '../../reducers/fileReducer'
 import { Upload } from './upload/Upload'
 
 export const Disc = () => {
@@ -13,6 +17,7 @@ export const Disc = () => {
    const currentDir = useSelector(state => state.files.currentDir)
    const dirStack = useSelector(state => state.files.dirStack)
    const loader = useSelector(state => state.loader.loader)
+
    const [dragEnter, setDragEnter] = useState(false)
    const [sort, setSort] = useState('type')
 
@@ -109,15 +114,22 @@ export const Disc = () => {
                   multiple={true}
                />
             </div>
-
             <div className='disk__select'>
-               <dir>Сортировка:</dir>
+               <dir className='disk__sort'>Сортировка:</dir>
                <select value={sort} onChange={e => setSort(e.target.value)}>
                   <option value='name'>По Названию</option>
                   <option value='type'>По типу</option>
                   <option value='date'>По дате</option>
                </select>
             </div>
+            <button
+               className='disk__list'
+               onClick={() => dispatch(setView('list'))}
+            />
+            <button
+               className='disk__plate'
+               onClick={() => dispatch(setView('plate'))}
+            />
          </div>
          <FileList />
          <Popup />

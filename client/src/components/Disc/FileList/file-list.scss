@@ -19,9 +19,21 @@
       justify-self: center;
    }
 }
+.file-list-plate {
+   display: flex;
+   flex-wrap: wrap;
+   margin: 20px 0;
+}
+.text-empty {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 26px;
+   height: calc(100vh - 50px);
+}
 // класс который будет добавляться в компонент Transition
 .item-enter-active {
-   animation: 500ms forwards item-enter;
+   animation: 1000ms forwards item-enter;
 }
 // будет два ключевых кадра
 @keyframes item-enter {
@@ -33,11 +45,4 @@
       opacity: 1;
       transform: translateY(0);
    }
-}
-.text-empty {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   font-size: 26px;
-   height: calc(100vh - 50px);
 }

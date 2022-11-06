@@ -31,7 +31,7 @@ export const Authorization = () => {
          <div className='authorization__header'>Авторизация</div>
          <Input
             type='text'
-            placeholder='Ведите текст...'
+            placeholder='Ведите логин...'
             value={email}
             setValue={setEmail}
          />
