@@ -33,10 +33,13 @@ export const FileList = () => {
             <TransitionGroup>
                {files.map(file => (
                   <CSSTransition
+                     in={!view}
                      key={file._id}
                      timeout={500}
-                     classNames={'item'}
+                     classNames={'file'}
                      exit={false}
+                     mountOnEnter
+                     unmountOnExit
                   >
                      <File file={file} />
                   </CSSTransition>

@@ -9,7 +9,6 @@ import {
 import { paths } from '../utils/path'
 
 export const getFiles = (dirId, sort) => {
-   console.log(dirId, sort)
    return async dispatch => {
       try {
          dispatch(showLoader())
